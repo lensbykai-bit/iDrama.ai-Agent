@@ -6,10 +6,27 @@ android {
         applicationId 'ai.idrama.agent'
         minSdk 24
         targetSdk 35
-        versionCode 1
-        versionName '1.0.0-demo'
+        versionCode 2
+        versionName '1.0.1'
     }
-    buildTypes { release { minifyEnabled false } }
+    signingConfigs {
+        release {
+            def path = System.getenv('IDRAMA_KEYSTORE_FILE')
+            if (path && System.getenv('IDRAMA_KEYSTORE_PASSWORD') && System.getenv('IDRAMA_KEY_ALIAS') && System.getenv('IDRAMA_KEY_PASSWORD')) {
+                storeFile file(path)
+                storePassword System.getenv('IDRAMA_KEYSTORE_PASSWORD')
+                keyAlias System.getenv('IDRAMA_KEY_ALIAS')
+                keyPassword System.getenv('IDRAMA_KEY_PASSWORD')
+            }
+        }
+    }
+    buildTypes {
+        debug { }
+        release {
+            minifyEnabled false
+            if (System.getenv('IDRAMA_KEYSTORE_FILE')) signingConfig signingConfigs.release
+        }
+    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
