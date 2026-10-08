@@ -1,6 +1,51 @@
 <!doctype html>
 <html lang="km"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#091527"><meta name="description" content="iDrama.ai Agent Web App demonstration"><title>iDrama.ai Agent | Demo</title><link rel="manifest" href="manifest.webmanifest"><style>
 *{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top right,#24315a,#080e1b 60%);font-family:system-ui,'Noto Sans Khmer',sans-serif;color:#eef5ff;min-height:100vh}button,input{font:inherit}button{cursor:pointer}.app{max-width:520px;margin:auto;min-height:100vh;padding:20px 17px 110px}.heading{display:flex;justify-content:space-between;align-items:center;padding:8px 0 23px}.brand{display:flex;gap:12px;align-items:center;font-size:19px;font-weight:850}.logo{background:linear-gradient(135deg,#6dceff,#c77dfb,#f070b6);border-radius:13px;padding:10px;color:white}.muted,.small{color:#acbcd3;font-size:13px}.subtitle{font-size:12px;color:#97a8c1}.pink{color:#f2a3e5}.card{background:linear-gradient(145deg,#1b2b48,#141c33);border:1px solid #34415f;border-radius:18px;padding:20px;margin-bottom:14px;box-shadow:0 8px 32px #060d1c66}.hero{background:linear-gradient(115deg,#1e4674,#2a234e 70%,#4c2859);padding:24px}.hero h1{margin:8px 0;font-size:30px}.money{color:#78ecb4}.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.stat{background:#1a2740;border:1px solid #384667;border-radius:15px;padding:13px 8px;text-align:center;min-width:0}.stat strong{display:block;font-size:19px;margin-top:12px;overflow-wrap:anywhere}.stat .small{font-size:11px}h2{font-size:16px;margin:0 0 12px}p{line-height:1.7}.link{word-break:break-all;padding:13px;border-radius:10px;background:#0e1930;color:#add8ff;font-size:12px;border:1px solid #334667;margin:13px 0}.btn{border:0;border-radius:12px;color:#fff;font-weight:700;background:linear-gradient(100deg,#248dd7,#9161d6,#db61b2);padding:13px 15px;width:100%;margin-top:9px}.btn:disabled{background:#344159;color:#acb6c7;cursor:not-allowed}.btn.secondary{background:#283952;border:1px solid #6680b5}.row{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:11px 0;border-bottom:1px solid #344159}.row:last-child{border:0}.nav{position:fixed;bottom:0;left:0;right:0;max-width:520px;margin:auto;background:#111d31;border-top:1px solid #405275;display:flex;padding:10px 8px max(10px,env(safe-area-inset-bottom))}.nav button{flex:1;border:0;background:transparent;color:#a9b9cf;padding:10px 0;font-size:12px}.nav button.active{color:#ff99d8;background:#28334d;border-radius:10px}.auth{padding-top:13vh}.auth h1{text-align:center;font-size:28px}.auth .center{text-align:center}.field{display:block;margin:15px 0;color:#ced8ed}.field input{display:block;width:100%;border-radius:12px;background:#0c1830;border:1px solid #465777;color:white;padding:15px;margin-top:8px;outline:none}.note{font-size:12px;color:#d2c6a4;line-height:1.8;background:#2a2637;border-radius:10px;padding:12px}.pill{padding:6px 10px;background:#302443;color:#ffb7e3;border-radius:30px;font-size:11px}.error{color:#ffaaaa;min-height:1.5em;font-size:13px}.actions{display:grid;grid-template-columns:1fr 1fr;gap:9px}@media(max-width:360px){.stat strong{font-size:15px}.app{padding-left:11px;padding-right:11px}}
+</style><style>
+/* iDrama.ai Agent Premium UI v2 — responsive visual refresh */
+:root{color-scheme:dark;--bg:#080f20;--panel:#111e37;--line:rgba(131,170,236,.21);--muted:#a2b5d2;--pink:#f58bcf;--cyan:#37c9ff;--green:#72ecb1}
+html{scroll-behavior:smooth}
+body{background:radial-gradient(ellipse 650px 650px at 6% -15%,rgba(17,103,224,.29),transparent 72%),radial-gradient(ellipse 480px 510px at 104% 7%,rgba(224,55,156,.13),transparent 72%),#090f1e;color:#f4f7ff;letter-spacing:.08px}
+body:before{content:"";pointer-events:none;position:fixed;inset:0;opacity:.32;background:linear-gradient(155deg,transparent 34%,rgba(15,90,167,.035) 65%,transparent 90%)}
+.app{position:relative;max-width:580px;padding:26px 20px 116px}
+.heading{padding:8px 2px 26px;gap:12px}
+.brand{font-size:clamp(19px,4.2vw,23px);letter-spacing:-.55px;line-height:1.3}
+.logo{width:48px;height:48px;display:grid;place-items:center;transform:none;box-shadow:0 8px 28px rgba(184,76,221,.26),inset 0 1px 1px #ffffff65;border-radius:15px;flex:none}
+.subtitle{font-size:12px;font-weight:500;margin-top:4px;letter-spacing:.2px}
+.pink{background:linear-gradient(90deg,#b78cff,#ff86c9);-webkit-background-clip:text;background-clip:text;color:transparent}
+.pill{background:#362144;border:1px solid #8d527a55;color:#ffb3e4;padding:7px 13px;letter-spacing:.65px;font-size:10px;font-weight:800}
+.card{background:linear-gradient(142deg,rgba(23,41,74,.96),rgba(13,26,50,.97));border:1px solid var(--line);border-radius:23px;padding:23px;margin-bottom:16px;box-shadow:0 14px 28px #00000025,inset 0 1px 0 #ffffff09}
+.hero{position:relative;overflow:hidden;background:radial-gradient(ellipse 290px 200px at 86% 52%,rgba(208,64,191,.30),transparent 73%),linear-gradient(117deg,#134b7d 0%,#122e5e 52%,#382452 100%);border:1px solid #3f83bb70;padding:29px 27px;min-height:179px}
+.hero:before{content:"";position:absolute;width:220px;height:220px;border:1px solid #55b3fa1f;right:-77px;top:-82px;border-radius:50%;box-shadow:0 0 0 29px #38b5fa09,0 0 0 60px #a07de80b}
+.hero:after{content:"✦";position:absolute;font-size:60px;right:29px;top:63px;color:#a78cff38}
+.hero h1{position:relative;font-size:clamp(40px,8vw,54px);font-weight:850;margin:16px 0 8px;letter-spacing:-1.7px}
+.money{color:var(--green)}
+.muted,.small{color:var(--muted);font-size:13px}
+.stats{gap:12px;margin:2px 0 18px}
+.stat{position:relative;overflow:hidden;background:linear-gradient(155deg,#142d50,#111c34);border:1px solid #3271b25c;border-radius:20px;min-height:146px;padding:20px 10px 15px;text-align:left;box-shadow:inset 0 1px 0 #ffffff0a}
+.stat:nth-child(2){background:linear-gradient(145deg,#3d2047,#241a39);border-color:#b659a66c}
+.stat:nth-child(3){background:linear-gradient(145deg,#103b52,#102138);border-color:#2794b46c}
+.stat>span{display:grid;place-items:center;width:42px;height:42px;border-radius:14px;background:#239ceb1e;font-size:23px;margin:0 0 11px}
+.stat:nth-child(2)>span{background:#e452a72e}.stat:nth-child(3)>span{background:#39c9eb24}
+.stat strong{font-size:clamp(17px,4vw,27px);margin-top:10px;white-space:normal;letter-spacing:-.55px}
+.stat .small{font-size:11px;color:#c2cce2;min-height:28px;line-height:1.5}
+h2{font-size:17px;font-weight:750;letter-spacing:-.2px}
+.link{background:#0a1731;border:1px solid #38557e;color:#b7ddff;font-size:12.5px;line-height:1.6;border-radius:14px;padding:17px;margin:17px 0}
+.btn{min-height:49px;border-radius:13px;background:linear-gradient(102deg,#12a9ea,#655ff0 59%,#da4cad);box-shadow:0 9px 20px #552ac03a,inset 0 1px 0 #ffffff55;transition:transform .15s,filter .15s;font-size:14px}
+.btn:not(:disabled):hover{filter:brightness(1.1);transform:translateY(-1px)}
+.btn:not(:disabled):active{transform:scale(.99)}
+.btn.secondary{background:#1d304f;border:1px solid #5680b8;box-shadow:none}
+.btn:focus-visible,.nav button:focus-visible{outline:2px solid #93deff;outline-offset:2px}
+.row{padding:15px 0;border-color:#42547955}.row b{font-size:14px}
+.nav{max-width:580px;border:1px solid #415a85a1;border-bottom:none;background:rgba(12,26,50,.97);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-radius:24px 24px 0 0;padding:11px 12px max(12px,env(safe-area-inset-bottom));box-shadow:0 -10px 32px #0005;gap:5px}
+.nav button{border-radius:14px;line-height:1.65;padding:11px 3px;font-size:12px;transition:background .16s,color .16s}
+.nav button.active{background:linear-gradient(145deg,#1b406e,#32244e);color:#f6a4e6;box-shadow:inset 0 0 0 1px #9866aa48;font-weight:750}
+.auth{padding-top:min(8vh,60px)}.auth .center{margin-bottom:29px}.auth h1{letter-spacing:-.8px}.auth .center>.logo{margin:auto;width:61px;height:61px}
+.field{font-size:13px;color:#cad9f4;font-weight:650}.field input{background:#0c1c36;border:1px solid #415b83;min-height:53px;transition:border .2s}.field input:focus{border-color:#58c5ff;box-shadow:0 0 0 3px #58c5ff18}
+.note{border:1px solid #68527263;background:#241e35;color:#d7c9e3;padding:16px}
+@media(max-width:390px){.app{padding-left:12px;padding-right:12px}.stats{gap:7px}.stat{padding:13px 8px;min-height:138px}.stat strong{font-size:17px}.stat>span{width:34px;height:34px}.card{padding:18px}.hero{padding:24px 20px}.brand{font-size:18px}}
+@media(min-width:680px){.app{margin-top:20px;margin-bottom:25px;border:1px solid #3143644d;border-radius:28px;min-height:90vh;background:#101b302e}.nav{bottom:0}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{transition:none!important;scroll-behavior:auto!important}}
 </style></head><body><div id="root"></div><script>
 'use strict';
 const KEY='idrama-agent-demo-v1',SITE='https://lensbykai-bit.github.io/iDrama.ai/?ref=AG001';
