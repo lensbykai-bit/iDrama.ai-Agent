@@ -19,17 +19,52 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.9'
-      - name: Install Android SDK API 35 with pre-installed command line tools
+      - name: Install Android SDK API 35
         run: |
-          echo "ANDROID_HOME=$ANDROID_HOME"
-          yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --licenses || true
           "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" "platforms;android-35" "build-tools;35.0.0"
-      - name: Build debug APK
-        run: gradle -p android --no-daemon assembleDebug --stacktrace
-      - name: Upload installable debug APK
+      - name: Build debug APK for developer testing
+        run: gradle -p android --no-daemon assembleDebug
+      - name: Upload debug test APK
         uses: actions/upload-artifact@v4
         with:
-          name: iDrama-Agent-Android-APK-Demo
+          name: iDrama-Agent-Android-Debug-Testing-Only
           path: android/app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: error
+          retention-days: 14
+      - name: Check signing configuration
+        id: signing
+        env:
+          KEYSTORE_B64: ${{ secrets.IDRAMA_KEYSTORE_BASE64 }}
+          STORE_PASSWORD: ${{ secrets.IDRAMA_KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.IDRAMA_KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.IDRAMA_KEY_PASSWORD }}
+        run: |
+          if [[ -n "$KEYSTORE_B64" && -n "$STORE_PASSWORD" && -n "$KEY_ALIAS" && -n "$KEY_PASSWORD" ]]; then
+            echo "ready=yes" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=no" >> "$GITHUB_OUTPUT"
+            echo "::notice::Release signing secrets missing; signed release skipped."
+          fi
+      - name: Prepare release keystore
+        if: steps.signing.outputs.ready == 'yes'
+        env:
+          KEYSTORE_B64: ${{ secrets.IDRAMA_KEYSTORE_BASE64 }}
+        run: |
+          printf '%s' "$KEYSTORE_B64" | base64 --decode > "$RUNNER_TEMP/idrama-release.jks"
+          chmod 600 "$RUNNER_TEMP/idrama-release.jks"
+      - name: Build signed release APK
+        if: steps.signing.outputs.ready == 'yes'
+        env:
+          IDRAMA_KEYSTORE_FILE: ${{ runner.temp }}/idrama-release.jks
+          IDRAMA_KEYSTORE_PASSWORD: ${{ secrets.IDRAMA_KEYSTORE_PASSWORD }}
+          IDRAMA_KEY_ALIAS: ${{ secrets.IDRAMA_KEY_ALIAS }}
+          IDRAMA_KEY_PASSWORD: ${{ secrets.IDRAMA_KEY_PASSWORD }}
+        run: gradle -p android --no-daemon assembleRelease
+      - name: Upload signed release APK
+        if: steps.signing.outputs.ready == 'yes'
+        uses: actions/upload-artifact@v4
+        with:
+          name: iDrama-Agent-Android-Signed-Release
+          path: android/app/build/outputs/apk/release/app-release.apk
           if-no-files-found: error
           retention-days: 30
