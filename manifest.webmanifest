@@ -1,0 +1,9 @@
+{
+  "name": "iDrama.ai Agent Demo",
+  "short_name": "iDrama Agent",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#091527",
+  "theme_color": "#091527",
+  "lang": "km"
+}
